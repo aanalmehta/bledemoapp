@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rlProgressMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Are you sure?"
+            android:textSize="18sp"
+            android:visibility="visible"
+            android:layout_marginTop="15dp"
+            android:longClickable="false"
+            android:textColor="@color/black"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="6dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Location permission is required to scan Therabody devices"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:longClickable="false"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="4dp"
+            android:visibility="visible"
+            app:layout_goneMarginTop="24dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textIsSelectable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <RelativeLayout
+            app:layout_constraintTop_toBottomOf="@+id/tvMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:gravity="end"
+            android:paddingStart="0dp">
+
+            <LinearLayout
+                android:id="@+id/btnNegativeContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="50dp"
+                android:paddingStart="0dp">
+
+                <TextView
+                    android:id="@+id/btnNegative"
+                    android:textColor="@color/black"
+                    tools:text="CANCEL"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="18dp"
+                    android:visibility="gone"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:gravity="end"
+                    android:breakStrategy="simple"
+                    android:paddingBottom="18dp"
+                    android:textSize="14sp"
+                    android:textAllCaps="true" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnPositive"
+                android:textColor="@color/black"
+                tools:text="TURN"
+                android:maxLines="2"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeStepGranularity="1sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/btnNegativeContainer"
+                android:layout_marginStart="-20dp"
+                android:textSize="14sp"
+                android:gravity="end"
+                android:paddingTop="18dp"
+                android:paddingStart="12dp"
+                android:breakStrategy="simple"
+                android:paddingEnd="12dp"
+                android:paddingBottom="18dp"
+                android:textAllCaps="true" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

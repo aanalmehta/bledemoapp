@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BleDemoApp</string>
+    <string name="permission_location_require_msg">Location permission is required to scan %s devices</string>
+    <string name="permission_bluetooth_require_msg">Nearby devices permission is required to scan %s devices</string>
+    <string name="permission_dialog_goto_setting_btn">GO TO SETTINGS</string>
+    <string name="permission_dialog_turn_on_location_msg">Please turn on Location Services</string>
+    <string name="permission_dialog_allow_btn">ALLOW</string>
+    <string name="dialog_cancel_btn">CANCEL</string>
+    <string name="dialog_ok">OK</string>
+    <string name="permission_dialog_turn_on_bluetooth_msg">Please turn on Bluetooth</string>
+    <string name="dialog_turn_on_btn">Turn ON</string>
+    <string name="device_name">Device Name: %s</string>
+    <string name="device_name_not_found">NOT FOUND</string>
+    <string name="device_id">UUID: %s</string>
+    <string name="dialog_scan_device">Scanning devices…</string>
+    <string name="something_went_wrong">Something went wrong…</string>
+    <string name="error_message_network">No internet connection. Turn on mobile data or connect to Wi-Fi.</string>
+</resources>

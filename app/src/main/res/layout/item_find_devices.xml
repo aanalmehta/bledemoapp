@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeItemView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="12dp"
+        android:animateLayoutChanges="true"
+        android:paddingBottom="12dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textDeviceName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            android:hyphenationFrequency="none"
+            android:gravity="start"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textMacAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            android:hyphenationFrequency="none"
+            android:gravity="start"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDeviceName"
+            tools:text="@string/app_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
