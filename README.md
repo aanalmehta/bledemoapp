@@ -10,6 +10,15 @@ Requirements:
   * Mobile device should support Bluetooth Hardware.
   * BLE devices should be near by Android Mobile App.
   * Local Database and backend set-up to call an API.
+
+Overview:
+
+  * I have used MVVYM architecture.
+  * For the local database, I have used Room Database.
+  * I am using LiveData to communicate between viewModel and View.
+  * For the backend, I have used NodeJS with typescript.
+  * For the backend database, I have used MySql database.
+  * For all the BLE related code, I have created BleManager service.
   
  Installation:
  
