@@ -10,6 +10,7 @@ import com.example.bledemoapp.ui.MainViewModel
 import com.example.bledemoapp.ui.adapter.ScannedDeviceAdapter
 import com.example.bledemoapp.utils.Extensions.debugLog
 import com.example.bledemoapp.utils.Extensions.showToast
+import com.example.bledemoapp.utils.NotificationService
 import com.example.bledemoapp.utils.PermissionManager
 import com.example.bledemoapp.utils.ProgressUtils
 
@@ -32,23 +33,39 @@ class MainActivity : AppCompatActivity() {
             ) {
                 when (it) {
                     is LiveDataResult.Success -> {
-                        ProgressUtils.showProgressDialog(
-                            this@MainActivity,
-                            getString(R.string.dialog_scan_device)
-                        )
-                        mainViewModel.startScanning()
                     }
                     else -> {
                         "Something went wrong".debugLog()
                     }
                 }
             }
-        } else {
-            ProgressUtils.showProgressDialog(
-                this@MainActivity,
-                getString(R.string.dialog_scan_device)
-            )
-            mainViewModel.startScanning()
+        }
+
+        binding.btnScan.setOnClickListener {
+            if (!PermissionManager.isBlePermissionsGranted()) {
+                PermissionManager.getAllBlePermissions(this).observe(
+                    this@MainActivity
+                ) {
+                    when (it) {
+                        is LiveDataResult.Success -> {
+                            ProgressUtils.showProgressDialog(
+                                this@MainActivity,
+                                getString(R.string.dialog_scan_device)
+                            )
+                            mainViewModel.startScanning()
+                        }
+                        else -> {
+                            "Something went wrong".debugLog()
+                        }
+                    }
+                }
+            } else {
+                ProgressUtils.showProgressDialog(
+                    this@MainActivity,
+                    getString(R.string.dialog_scan_device)
+                )
+                mainViewModel.startScanning()
+            }
         }
 
         mainViewModel.bleDeviceList.observe(this) {
@@ -56,14 +73,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.totalRecords.observe(this) {
-            "Total scanned records in db: $it".showToast(this)
+            getString(R.string.total_scanned_records, it).showToast(this)
         }
 
         mainViewModel.uploadSuccess.observe(this) {
             if (it) {
-                "Server Upload: SUCCESS".showToast(this)
+                NotificationService.pushNotification(baseContext)
             } else {
-                "Something went wrong".showToast(this)
+                getString(R.string.something_went_wrong).showToast(this)
             }
             ProgressUtils.hideProgressDialog()
         }

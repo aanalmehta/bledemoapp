@@ -15,4 +15,6 @@
     <string name="dialog_scan_device">Scanning devices…</string>
     <string name="something_went_wrong">Something went wrong…</string>
     <string name="error_message_network">No internet connection. Turn on mobile data or connect to Wi-Fi.</string>
+    <string name="btn_scan">Scan</string>
+    <string name="total_scanned_records">Total scanned records in db: %d</string>
 </resources>

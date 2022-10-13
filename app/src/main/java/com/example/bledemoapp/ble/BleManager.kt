@@ -84,7 +84,7 @@ object BleManager {
                 device.advertisementBytes = Arrays.toString(result.scanRecord?.bytes)
                 val manufactureList = ArrayList<String>()
                 if (result.scanRecord?.manufacturerSpecificData?.isNotEmpty() == true) {
-                    result.scanRecord?.manufacturerSpecificData?.forEach { key, value ->
+                    result.scanRecord?.manufacturerSpecificData?.forEach { _, value ->
                         manufactureList.add(Arrays.toString(value))
                     }
                 }
