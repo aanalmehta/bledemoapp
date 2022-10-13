@@ -21,13 +21,18 @@ Requirements:
   * Setup local database in MySql Workbench.
   * The local database details should be followed like this:
     # DB Configuration
+    
     DBHOST=localhost
+    
     DBUSER=root
+    
     DBPASSWORD=aanal
+    
     DATABASE=devices
 
     # Server Environment
     PORT=3000
+    
   * Run below query.
   
     DROP TABLE IF EXISTS `device`;
