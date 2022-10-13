@@ -12,14 +12,14 @@ import com.example.bledemoapp.databinding.DialogAlertBinding
  *
  * @author Aanal Shah
  */
-open class AlertView(var activity: FragmentActivity?) {
+open class AlertView(private var activity: FragmentActivity?) {
 
     companion object {
         // is alert currently showing or not
         var isAlertShowing = false
     }
 
-    protected var dialog: AlertDialog? = null
+    private var dialog: AlertDialog? = null
 
     /**
      * Show alert message to user
@@ -32,7 +32,6 @@ open class AlertView(var activity: FragmentActivity?) {
      * @param negativeButton action button string for negative button.if not set negative button will not display
      * @param negativeButtonListener listener to invoke whenever user click on negative button.
      * dialog will dismiss if not listener provided
-     * @param isErrorMessage true if alert message is to display error else false
      */
     fun showAlert(
         msg: String,
@@ -40,8 +39,7 @@ open class AlertView(var activity: FragmentActivity?) {
         positiveButton: String? = activity?.getString(R.string.dialog_ok),
         positiveButtonListener: (() -> Unit)? = null,
         negativeButton: String? = null,
-        negativeButtonListener: (() -> Unit)? = null,
-        isErrorMessage: Boolean = false
+        negativeButtonListener: (() -> Unit)? = null
     ): AlertView {
         activity?.let {
             try {
@@ -66,7 +64,7 @@ open class AlertView(var activity: FragmentActivity?) {
                 if (title.isNullOrEmpty()) {
                     views.tvTitle.visibility = View.GONE
                 }
-                if (msg.isNullOrEmpty()) {
+                if (msg.isEmpty()) {
                     views.tvMsg.visibility = View.GONE
                 }
                 views.tvTitle.text = title
@@ -76,10 +74,14 @@ open class AlertView(var activity: FragmentActivity?) {
                 }.create()
                 isAlertShowing = true
                 dialog?.setOnShowListener {
-                    views.btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_PX, views.btnPositive.textSize)
+                    views.btnNegative.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX,
+                        views.btnPositive.textSize
+                    )
                 }
                 dialog?.show()
             } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
         return this
@@ -88,19 +90,9 @@ open class AlertView(var activity: FragmentActivity?) {
     /**
      * Dismiss alert message
      */
-    fun dismissAlert() {
+    private fun dismissAlert() {
         dialog?.dismiss()
         isAlertShowing = false
-    }
-
-    /**
-     * Show alert message
-     */
-    fun showAlert() {
-        dialog?.let {
-            isAlertShowing = true
-            it.show()
-        }
     }
 
 }

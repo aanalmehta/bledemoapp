@@ -1,6 +1,7 @@
 package com.example.bledemoapp.ble
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.BluetoothLeScanner
@@ -12,29 +13,34 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.core.app.ActivityCompat
+import androidx.core.util.forEach
+import androidx.core.util.isNotEmpty
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.bledemoapp.App
 import com.example.bledemoapp.model.BaseScannedDevice
 import com.example.bledemoapp.utils.Extensions.containsBleDevice
 import com.example.bledemoapp.utils.Extensions.debugLog
+import java.util.Arrays
 
 
 object BleManager {
     private var scanning = false
     private val handler = Handler(Looper.getMainLooper())
-    private val SCAN_PERIOD: Long = 10000
+    // Scan for 10 seconds
+    private const val SCAN_PERIOD: Long = 10000
 
-    var scanner: BluetoothLeScanner
-    var bluetoothManager =
+    private var scanner: BluetoothLeScanner
+    private var bluetoothManager =
         App.instance?.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-    var bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter
+    private var bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter
     var bleDeviceList = ArrayList<BaseScannedDevice>()
 
     init {
         scanner = bluetoothAdapter.bluetoothLeScanner
     }
 
+    @SuppressLint("MissingPermission")
     fun startScanning(): LiveData<ArrayList<BaseScannedDevice>> {
         val observer = MutableLiveData<ArrayList<BaseScannedDevice>>()
         if (!scanning) { // Stops scanning after a pre-defined scan period.
@@ -55,6 +61,7 @@ object BleManager {
     }
 
     private val scanCallback: ScanCallback = object : ScanCallback() {
+        @SuppressLint("MissingPermission")
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             if (isBluetoothPermissionGranted()) {
                 val device = BaseScannedDevice()
@@ -74,9 +81,21 @@ object BleManager {
                 }
                 device.mTxPowerLevel = result.scanRecord?.txPowerLevel
                 device.mDeviceName = result.scanRecord?.deviceName
-                device.advertisementBytes = result.scanRecord?.bytes.toString()
-                device.manufacturerBytes = result.scanRecord?.manufacturerSpecificData.toString()
-                device.serviceUUIDs = result.scanRecord?.serviceUuids.toString()
+                device.advertisementBytes = Arrays.toString(result.scanRecord?.bytes)
+                val manufactureList = ArrayList<String>()
+                if (result.scanRecord?.manufacturerSpecificData?.isNotEmpty() == true) {
+                    result.scanRecord?.manufacturerSpecificData?.forEach { key, value ->
+                        manufactureList.add(Arrays.toString(value))
+                    }
+                }
+                device.manufacturerBytes = manufactureList.toString()
+                val list = ArrayList<String>()
+                if (result.scanRecord?.serviceUuids?.isNotEmpty() == true) {
+                    result.scanRecord?.serviceUuids?.forEach {
+                        list.add(it.uuid.toString())
+                    }
+                }
+                device.serviceUUIDs = list.toString()
                 if (bleDeviceList.isEmpty() || !bleDeviceList.containsBleDevice(device.uid)) {
                     ("onScanResult => device ${device.mDeviceName}, UUID ${device.uid}").debugLog()
                     bleDeviceList.add(device)

@@ -14,7 +14,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -74,7 +73,7 @@ object PermissionManager {
         return false
     }
 
-    fun isLocationPermissionRequired(): Boolean {
+    private fun isLocationPermissionRequired(): Boolean {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.S
     }
 
@@ -269,11 +268,10 @@ object PermissionManager {
                         observer.postValue(LiveDataResult.Error(""))
                     }
                 },
-                negativeButton = activity.getString(R.string.dialog_cancel_btn),
-                negativeButtonListener = {
-                    observer.postValue(LiveDataResult.Error(""))
-                }
-            )
+                negativeButton = activity.getString(R.string.dialog_cancel_btn)
+            ) {
+                observer.postValue(LiveDataResult.Error(""))
+            }
         }
     }
 
@@ -298,10 +296,9 @@ object PermissionManager {
                     getLocationOrBLEPermission(activity, observer)
                 }
             },
-            negativeButton = activity.getString(R.string.dialog_cancel_btn),
-            negativeButtonListener = {
-                observer.postValue(LiveDataResult.Error(""))
-            }
-        )
+            negativeButton = activity.getString(R.string.dialog_cancel_btn)
+        ) {
+            observer.postValue(LiveDataResult.Error(""))
+        }
     }
 }

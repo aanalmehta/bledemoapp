@@ -164,62 +164,6 @@ object RetrofitManager {
     }
 
     /**
-     * Retrofit response manage with different callback
-     *
-     * @param call retrofit service call.
-     * @param passTokenInHeader manage token for futureflag.
-     * @param apiKey api key if required.
-     * @return ApiResponse api response.
-     */
-    suspend fun <T> executeRequestList(
-        call: List<Call<T>>,
-        apiKey: String = ""
-    ): ApiResponse<T> {
-        try {
-            xApiKey = apiKey
-            val taskService = ServiceGenerator.createService(TaskService::class.java)
-            val call = taskService.tasks
-            call.enqueue(object : Callback<List<Task>> {
-                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-                    val rawResponse = response.raw()
-                    when (response.code()) {
-                        in 200..300 -> {
-                            if (response.isSuccessful && response.body() != null) {
-                                ApiResponse.Success(response.body()!!)
-                            } else {
-                                ApiResponse.Error(
-                                    R.string.something_went_wrong,
-                                    errorMsgFromAPI = "Something went wrong",
-                                    code = response.code()
-                                )
-                            }
-                        }
-                        else -> {
-                            ApiResponse.Error(
-                                R.string.something_went_wrong,
-                                errorMsgFromAPI = "Something went wrong",
-                                code = response.code()
-                            )
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-
-                }
-
-            })
-        } catch (error: Throwable) {
-            when (error) {
-                is ConnectException, is UnknownHostException -> {
-                    return ApiResponse.Error(R.string.error_message_network)
-                }
-            }
-        }
-        return ApiResponse.Error(R.string.something_went_wrong)
-    }
-
-    /**
      * Retrofit error callback
      *
      * @param response api response.
